@@ -1,7 +1,6 @@
 import streamlit as st
 import numpy as np
 import pickle
-import string
 
 # Cargar el modelo y el vectorizador TF-IDF
 with open('logistic_model.pkl', 'rb') as model_file:
@@ -17,7 +16,7 @@ def clean_text(text):
     # Convertir a minúsculas
     text = text.lower()
     # Eliminar signos de puntuación
-    text = text.translate(str.maketrans('', '', string.punctuation))
+    text = ''.join(char for char in text if char not in string.punctuation)
     # Eliminar espacios adicionales
     text = ' '.join(text.split())
     return text
