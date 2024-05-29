@@ -1,5 +1,6 @@
 
 import streamlit as st
+import numpy as np
 import pickle
 from bs4 import BeautifulSoup
 import re
