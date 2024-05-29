@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import pickle
+import string
 
 # Cargar el modelo y el vectorizador TF-IDF
 with open('logistic_model.pkl', 'rb') as model_file:
