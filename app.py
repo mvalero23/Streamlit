@@ -1,8 +1,7 @@
 import streamlit as st
 import numpy as np
 import pickle
-from bs4 import BeautifulSoup
-import re
+import string
 
 # Cargar el modelo y el vectorizador TF-IDF
 with open('logistic_model.pkl', 'rb') as model_file:
@@ -13,14 +12,22 @@ with open('tfidf_vectorizer.pkl', 'rb') as vectorizer_file:
 
 st.title("Predict Reviews' Sentiment")
 
+# Función para limpiar el texto
+def clean_text(text):
+    # Convertir a minúsculas
+    text = text.lower()
+    # Eliminar signos de puntuación
+    text = text.translate(str.maketrans('', '', string.punctuation))
+    # Eliminar espacios adicionales
+    text = ' '.join(text.split())
+    return text
+
 # Entrada de la reseña
 review = st.text_input("Ingrese la reseña:")
 
 if st.button("Predicción"):
-    # Preprocesar y vectorizar la reseña
-    review_cleaned = BeautifulSoup(review, "html.parser").get_text()
-    review_cleaned = re.sub(r'[^\w\s]', '', review_cleaned)
-    review_cleaned = review_cleaned.lower()
+    # Limpiar y vectorizar la reseña
+    review_cleaned = clean_text(review)
     review_vectorized = tfidf_vectorizer.transform([review_cleaned])
 
     # Predicción
